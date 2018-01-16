@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -34,6 +35,20 @@ public class EventHandler {
         List<String> argsList = new ArrayList<>(Arrays.asList(argArray));
         argsList.remove(0); // Remove the command
         
+        switch (commandStr) {
+        case "dice":
+        	commandDice(event, argsList);
+        	break;
+        }
         Library.sendMessage(event.getChannel(), commandStr);
     }
+
+	private void commandDice(MessageReceivedEvent event, List<String> argsList) {
+		Random random = new Random();
+		if (argsList.size() < 1){
+			int n = random.nextInt(100) + 1;
+			String message = String.valueOf(n) + "(1-100)";
+			Library.sendMessage(event.getChannel(), message);
+		}
+	}
 }
