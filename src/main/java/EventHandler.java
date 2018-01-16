@@ -40,7 +40,6 @@ public class EventHandler {
         	commandDice(event, argsList);
         	break;
         }
-        Library.sendMessage(event.getChannel(), commandStr);
     }
 
 	private void commandDice(MessageReceivedEvent event, List<String> argsList) {
