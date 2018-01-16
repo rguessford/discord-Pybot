@@ -3,6 +3,7 @@
 #
 
 .gradle
+!gradle-wrapper.jar
 
 #
 # Default excludes
@@ -13,7 +14,6 @@
 *.dmg
 *.gz
 *.iso
-*.jar
 *.rar
 *.tar
 *.zip
