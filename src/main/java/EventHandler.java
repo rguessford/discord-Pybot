@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,16 +44,49 @@ public class EventHandler {
     }
 
 	private void commandDice(MessageReceivedEvent event, List<String> argsList) {
+		
 		Random random = new Random();
+		for(String aString:argsList){
+			try{
+				new BigInteger(aString);
+			}catch (NumberFormatException e) {
+				Library.sendMessage(event.getChannel(), "\""+aString+"\" proper use of /dice is: /dice [max [times]]");
+				return;
+			}
+		}
+		
 		if (argsList.size() < 1){
 			int n = random.nextInt(100) + 1;
 			String message = String.valueOf(n) + " (1-100)";
 			Library.sendMessage(event.getChannel(), message);
-		} else if (argsList.size() == 1){
-			int n = random.nextInt(Integer.parseInt(argsList.get(0))) + 1;
+		} else if (argsList.size() == 1) {
+			BigInteger n = nextRandomBigInteger(new BigInteger(argsList.get(0))).add(BigInteger.ONE);
 			String message = String.valueOf(n) + " (1-"+argsList.get(0)+")";
 			Library.sendMessage(event.getChannel(), message);
+		} else if (argsList.size() == 2) {
+			BigInteger total = BigInteger.ZERO;
+			BigInteger numDice = new BigInteger(argsList.get(1));
+			BigInteger range = new BigInteger(argsList.get(0));
+			long timeOutStart = System.currentTimeMillis();
+			for (BigInteger i = BigInteger.ZERO; i.compareTo(numDice) < 0; i = i.add(BigInteger.ONE)) {
+				if (System.currentTimeMillis() - timeOutStart > 10000){
+					Library.sendMessage(event.getChannel(), "I've been rolling these " + range + " sided dice for 10 seconds and I'm giving up. I've rolled "+ i + " dice so far totalling " +total+ ", but that's all you get");
+					return;
+				}
+				total = total.add(nextRandomBigInteger(range));
+			}
+			String message = String.valueOf(total) + " (1-"+range+")x"+numDice;
+			Library.sendMessage(event.getChannel(), message);
 		}
+	}
+	
+	public BigInteger nextRandomBigInteger(BigInteger n) {
+	    Random rand = new Random();
+	    BigInteger result = new BigInteger(n.bitLength(), rand);
+	    while( result.compareTo(n) >= 0 ) {
+	        result = new BigInteger(n.bitLength(), rand);
+	    }
+	    return result;
 	}
 	
 }
