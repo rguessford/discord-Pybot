@@ -36,9 +36,9 @@ public class EventHandler {
         argsList.remove(0); // Remove the command
         
         switch (commandStr) {
-        case "dice":
-        	commandDice(event, argsList);
-        	break;
+        	case "dice":
+        		commandDice(event, argsList);
+        		break;
         }
     }
 
@@ -46,8 +46,13 @@ public class EventHandler {
 		Random random = new Random();
 		if (argsList.size() < 1){
 			int n = random.nextInt(100) + 1;
-			String message = String.valueOf(n) + "(1-100)";
+			String message = String.valueOf(n) + " (1-100)";
+			Library.sendMessage(event.getChannel(), message);
+		} else if (argsList.size() == 1){
+			int n = random.nextInt(Integer.parseInt(argsList.get(0))) + 1;
+			String message = String.valueOf(n) + " (1-"+argsList.get(0)+")";
 			Library.sendMessage(event.getChannel(), message);
 		}
 	}
+	
 }

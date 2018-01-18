@@ -1,1 +1,1 @@
-bot: build/install/Pybot/bin/Pybot
+web: build/install/Pybot/bin/Pybot
