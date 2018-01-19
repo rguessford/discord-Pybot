@@ -18,6 +18,7 @@ import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IUser;
+import sx.blah.discord.util.EmbedBuilder;
 
 public class EventHandler {
 	
@@ -85,10 +86,11 @@ public class EventHandler {
 	                System.out.println("  error code: " + queryResult.getErrorCode());
 	                System.out.println("  error message: " + queryResult.getErrorMessage());
 	            } else if (!queryResult.isSuccess()) {
-	                System.out.println("Query was not understood; no results available.");
+	            	Library.sendMessage(event.getChannel(), "Query was not understood; no results available.");
 	            } else {
 	                // Got a result.
 	                System.out.println("Successful query. Pods follow:\n");
+	                
 	                for (WAPod pod : queryResult.getPods()) {
 	                    if (!pod.isError()) {
 	                        System.out.println(pod.getTitle());
@@ -96,15 +98,15 @@ public class EventHandler {
 	                        for (WASubpod subpod : pod.getSubpods()) {
 	                            for (Object element : subpod.getContents()) {
 	                                if (element instanceof WAImage) {
-	                                    Library.sendMessage(event.getChannel(), ((WAImage) element).getURL());
+	                                	EmbedBuilder builder = new EmbedBuilder();
+	                                	builder.withImage(((WAImage) element).getURL());
+	                                	event.getChannel().sendMessage(builder.build());
 	                                }
 	                            }
 	                        }
-	                        System.out.println("");
 	                    }
 	                }
-	                // We ignored many other types of Wolfram|Alpha output, such as warnings, assumptions, etc.
-	                // These can be obtained by methods of WAQueryResult or objects deeper in the hierarchy.
+	            
 	            }
 	        } catch (WAException e) {
 	            e.printStackTrace();
