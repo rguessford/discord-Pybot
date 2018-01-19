@@ -40,9 +40,20 @@ public class EventHandler {
         	case "dice":
         		commandDice(event, argsList);
         		break;
+        	case "say":
+        		commandSay(event,argsList);
+        		break;
         }
     }
-
+	
+	private void commandSay(MessageReceivedEvent event, List<String> argsList){
+		StringBuilder messageBuilder = new StringBuilder();
+		for (String string : argsList) {
+			messageBuilder.append(string);
+		}
+		Library.sendMessage(event.getChannel(), messageBuilder.toString());
+	}
+	
 	private void commandDice(MessageReceivedEvent event, List<String> argsList) {
 		
 		Random random = new Random();
@@ -50,7 +61,7 @@ public class EventHandler {
 			try{
 				new BigInteger(aString);
 			}catch (NumberFormatException e) {
-				Library.sendMessage(event.getChannel(), "\""+aString+"\" proper use of /dice is: /dice [max [times]]");
+				Library.sendMessage(event.getChannel(), "/dice: /dice [max [times]]");
 				return;
 			}
 		}
