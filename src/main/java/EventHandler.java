@@ -133,7 +133,10 @@ public class EventHandler {
 		Random random = new Random();
 		for(String aString:argsList){
 			try{
-				new BigInteger(aString);
+				BigInteger integer = new BigInteger(aString);
+				if(integer.compareTo(BigInteger.ZERO) < 0){
+					Library.sendMessage(event.getChannel(), "no.");
+				}
 			}catch (NumberFormatException e) {
 				Library.sendMessage(event.getChannel(), "/dice: /dice [max [times]]");
 				return;
@@ -145,6 +148,7 @@ public class EventHandler {
 			String message = String.valueOf(n) + " (1-100)";
 			Library.sendMessage(event.getChannel(), message);
 		} else if (argsList.size() == 1) {
+
 			BigInteger n = nextRandomBigInteger(new BigInteger(argsList.get(0))).add(BigInteger.ONE);
 			String message = String.valueOf(n) + " (1-"+argsList.get(0)+")";
 			Library.sendMessage(event.getChannel(), message);
