@@ -134,7 +134,7 @@ public class EventHandler {
 		for(String aString:argsList){
 			try{
 				BigInteger integer = new BigInteger(aString);
-				if(integer.compareTo(BigInteger.ZERO) < 0){
+				if(integer.compareTo(BigInteger.ZERO) < 1){
 					Library.sendMessage(event.getChannel(), "no.");
 				}
 			}catch (NumberFormatException e) {

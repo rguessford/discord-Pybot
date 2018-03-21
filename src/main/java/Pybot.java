@@ -7,8 +7,7 @@ public class Pybot {
 	IDiscordClient client;
 	
 	public static void main(String[] args) {
-		String discordKey = System.getenv("DISCORD_KEY");
-        IDiscordClient client = createClient("NDI2MDkwMzcyMzY0NzYzMTQ2.DZQ9Tg.g5v5HnC-SJUMTsiKUrp0-SajxZs", false); // Gets the client object (from the first example)
+        IDiscordClient client = createClient(System.getenv("DISCORD_KEY"), false); // Gets the client object (from the first example)
         EventDispatcher dispatcher = client.getDispatcher(); // Gets the EventDispatcher instance for this client instance
         dispatcher.registerListener(new EventHandler()); // Registers the IListener example class from above
         client.login();
