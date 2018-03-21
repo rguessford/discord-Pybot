@@ -21,10 +21,10 @@ import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 
 public class EventHandler {
-	
+	IDiscordClient client;
 	@EventSubscriber
 	public void readyEvent(ReadyEvent event) {
-		IDiscordClient client = event.getClient(); // Gets the client from the event object
+		client = event.getClient(); // Gets the client from the event object
 		IUser ourUser = client.getOurUser();// Gets the user represented by the client
 		String name = ourUser.getName();// Gets the name of our user
 		System.out.println("Logged in as " + name);
@@ -57,9 +57,16 @@ public class EventHandler {
         	case "wolfram":
         		commandWolfram(event, argsList);
         		break;
+        	case "name":
+        		commandName(event, argsList);
+        		break;
         }
     }
-	
+	private void commandName(MessageReceivedEvent event, List<String> argsList){
+		if (argsList.get(0) != null || argsList.get(0) != ""){
+			client.changeUsername(argsList.get(0));
+		}
+	}
 	private void commandWolfram(MessageReceivedEvent event, List<String> argsList){
 		String queryString = "";
 		for (String string : argsList) {
