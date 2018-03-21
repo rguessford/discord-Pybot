@@ -93,8 +93,6 @@ public class EventHandler {
 	                
 	                for (WAPod pod : queryResult.getPods()) {
 	                    if (!pod.isError()) {
-	                        System.out.println(pod.getTitle());
-	                        System.out.println("------------");
 	                        for (WASubpod subpod : pod.getSubpods()) {
 	                            for (Object element : subpod.getContents()) {
 	                                if (element instanceof WAImage) {
