@@ -116,7 +116,7 @@ public class EventHandler {
 	private void commandSay(MessageReceivedEvent event, List<String> argsList){
 		StringBuilder messageBuilder = new StringBuilder();
 		for (String string : argsList) {
-			messageBuilder.append(string);
+			messageBuilder.append(string + " ");
 		}
 		Library.sendMessage(event.getChannel(), messageBuilder.toString());
 	}
