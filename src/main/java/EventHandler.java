@@ -137,7 +137,7 @@ public class EventHandler {
 				if(integer.compareTo(BigInteger.ZERO) < 1){
 					Library.sendMessage(event.getChannel(), "no.");
 				}
-			}catch (NumberFormatException e) {
+			}catch (Exception e) {
 				Library.sendMessage(event.getChannel(), "/dice: /dice [max [times]]");
 				return;
 			}
